@@ -46,7 +46,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -54,6 +53,7 @@ import androidx.navigation.NavController
 import com.codelab.basiclayouts.R
 import com.codelab.basiclayouts.clases.login.RoundedButton
 import com.codelab.basiclayouts.clases.login.TransparentTextField
+import com.codelab.basiclayouts.navigation.AppScreens
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -106,18 +106,13 @@ fun RegisterScreen(navController: NavController) {
                         verticalArrangement = Arrangement.SpaceEvenly
                     ){
                         Text(
-                            text = "Welcome Back!",
+                            text = "Crear una cuenta nueva",
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Medium
                             )
                         )
 
-                        Text(
-                            text = "Login to your Account",
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        )
+
 
                         Column(
                             modifier = Modifier
@@ -172,13 +167,13 @@ fun RegisterScreen(navController: NavController) {
                                     PasswordVisualTransformation()
                                 }
                             )
-
+                            /*
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = "Forgot Password?",
                                 style = MaterialTheme.typography.bodySmall,
                                 textAlign = TextAlign.End
-                            )
+                            )*/
                         }
 
                         Column(
@@ -187,35 +182,39 @@ fun RegisterScreen(navController: NavController) {
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             RoundedButton(
-                                text = "Login",
+                                text = "Registrar",
                                 displayProgressBar = false,
                                 onClick = {
-                                    auth.signInWithEmailAndPassword(emailValue.value, passwordValue.value)
-                                        .addOnCompleteListener{ task ->
+                                    //REGISTRAR EN FIREBASE
+                                    auth.createUserWithEmailAndPassword(emailValue.value, passwordValue.value)
+                                        .addOnCompleteListener { task ->
                                             if (task.isSuccessful) {
                                                 // Sign in success, update UI with the signed-in user's information
-                                                Log.d("Exito","signInWithEmail:success")
-                                                Toast.makeText(context,"error",Toast.LENGTH_LONG)
-
-                                            } else {
-                                                // If sign in fails, display a message to the user.
-                                                Log.w("Failure", "signInWithEmail:failure", task.exception)
+                                                Log.d("Cuenta creada", "createUserWithEmail:success")
                                                 Toast.makeText(
                                                     context,
-                                                    "Authentication failed.",
+                                                    "Correo creado correctamente",
                                                     Toast.LENGTH_SHORT,
                                                 ).show()
+                                                navController.navigate(AppScreens.SecondScreen.route)
+                                                //val user = auth.currentUser
+                                            } else {
+                                                // If sign in fails, display a message to the user.
+                                                Log.w("Error al crear la cuenta", "createUserWithEmail:failure", task.exception)
+                                                Toast.makeText(
+                                                    context,
+                                                    "Error al crear la cuenta",
+                                                    Toast.LENGTH_SHORT,
+                                                ).show()
+
                                             }
                                         }
-                                    // [END sign_in_with_email]
-
-
                                 }
                             )
 
                             ClickableText(
                                 text = buildAnnotatedString {
-                                    append("Do not have an Account?")
+                                    append("¿Ya tienes una cuenta?")
 
                                     withStyle(
                                         style = SpanStyle(
@@ -223,36 +222,17 @@ fun RegisterScreen(navController: NavController) {
                                             fontWeight = FontWeight.Bold
                                         )
                                     ){
-                                        append("Sign up")
+                                        append("Iniciar sesión")
                                     }
                                 }
                             ){
-                                // TODO("NAVIGATE TO REGISTER SCREEN")
+                                navController.navigate(AppScreens.ThirdScreen.route)
                             }
                         }
                     }
                 }
 
-                FloatingActionButton(
-                    modifier = Modifier
-                        .size(72.dp)
-                        .background(MaterialTheme.colorScheme.primary)
-                        .constrainAs(fab) {
-                            top.linkTo(surface.top, margin = (-36).dp)
-                            end.linkTo(surface.end, margin = 36.dp)
-                        },
 
-
-                    //backgroundColor = MaterialTheme.colorScheme.primary,
-                    onClick = {}
-                ) {
-                    Icon(
-                        modifier = Modifier.size(42.dp),
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                        contentDescription = "Forward Icon",
-                        tint = Color.White
-                    )
-                }
             }
         }
     }

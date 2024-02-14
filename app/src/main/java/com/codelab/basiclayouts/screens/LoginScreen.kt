@@ -52,10 +52,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import com.codelab.basiclayouts.R
-import com.codelab.basiclayouts.clases.login.EmailPasswordActivity
 import com.codelab.basiclayouts.clases.login.RoundedButton
 import com.codelab.basiclayouts.clases.login.TransparentTextField
-import com.codelab.basiclayouts.navigation.AppNavigation
 import com.codelab.basiclayouts.navigation.AppScreens
 import com.google.firebase.auth.FirebaseAuth
 
@@ -109,14 +107,14 @@ fun LoginScreen(navController: NavController) {
                         verticalArrangement = Arrangement.SpaceEvenly
                     ){
                         Text(
-                            text = "Welcome Back!",
+                            text = "¡Bienvenido de vuelta!",
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Medium
                             )
                         )
 
                         Text(
-                            text = "Login to your Account",
+                            text = "Iniciar sesión",
                             style = MaterialTheme.typography.bodySmall.copy(
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -175,13 +173,13 @@ fun LoginScreen(navController: NavController) {
                                     PasswordVisualTransformation()
                                 }
                             )
-
+                            /*
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = "Forgot Password?",
                                 style = MaterialTheme.typography.bodySmall,
                                 textAlign = TextAlign.End
-                            )
+                            )*/
                         }
 
                         Column(
@@ -197,15 +195,15 @@ fun LoginScreen(navController: NavController) {
                                         .addOnCompleteListener{ task ->
                                             if (task.isSuccessful) {
                                                 // Sign in success, update UI with the signed-in user's information
-                                                Log.d("Exito","signInWithEmail:success")
+                                                Log.d("Login hecho","signInWithEmail:success")
                                                 Toast.makeText(context,"error",Toast.LENGTH_LONG)
 
                                             } else {
                                                 // If sign in fails, display a message to the user.
-                                                Log.w("Failure", "signInWithEmail:failure", task.exception)
+                                                Log.w("Login fallado", "signInWithEmail:failure", task.exception)
                                                 Toast.makeText(
                                                     context,
-                                                    "Authentication failed.",
+                                                    "Correo o contraseña erróneos",
                                                     Toast.LENGTH_SHORT,
                                                 ).show()
                                             }
@@ -218,7 +216,7 @@ fun LoginScreen(navController: NavController) {
 
                             ClickableText(
                                 text = buildAnnotatedString {
-                                    append("Do not have an Account?")
+                                    append("¿Aún no tienes una cuenta? ")
 
                                     withStyle(
                                         style = SpanStyle(
@@ -226,36 +224,17 @@ fun LoginScreen(navController: NavController) {
                                             fontWeight = FontWeight.Bold
                                         )
                                     ){
-                                        append("Sign up")
+                                        append("Registrarse")
                                     }
                                 }
                             ){
-                                // TODO("NAVIGATE TO REGISTER SCREEN")
+                                navController.navigate(AppScreens.FourthScreen.route)
                             }
                         }
                     }
                 }
 
-                FloatingActionButton(
-                    modifier = Modifier
-                        .size(72.dp)
-                        .background(MaterialTheme.colorScheme.primary)
-                        .constrainAs(fab) {
-                            top.linkTo(surface.top, margin = (-36).dp)
-                            end.linkTo(surface.end, margin = 36.dp)
-                        },
 
-
-                    //backgroundColor = MaterialTheme.colorScheme.primary,
-                    onClick = {}
-                ) {
-                    Icon(
-                        modifier = Modifier.size(42.dp),
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                        contentDescription = "Forward Icon",
-                        tint = Color.White
-                    )
-                }
             }
         }
     }
