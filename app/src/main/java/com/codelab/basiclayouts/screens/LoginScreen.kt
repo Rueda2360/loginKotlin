@@ -196,8 +196,7 @@ fun LoginScreen(navController: NavController) {
                                             if (task.isSuccessful) {
                                                 // Sign in success, update UI with the signed-in user's information
                                                 Log.d("Login hecho","signInWithEmail:success")
-                                                Toast.makeText(context,"error",Toast.LENGTH_LONG)
-
+                                                navController.navigate(AppScreens.FirstScreen.route)
                                             } else {
                                                 // If sign in fails, display a message to the user.
                                                 Log.w("Login fallado", "signInWithEmail:failure", task.exception)
