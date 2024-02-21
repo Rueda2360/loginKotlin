@@ -196,7 +196,7 @@ fun RegisterScreen(navController: NavController) {
                                                     "Correo creado correctamente",
                                                     Toast.LENGTH_SHORT,
                                                 ).show()
-                                                navController.navigate(AppScreens.SecondScreen.route)
+                                                navController.navigate(AppScreens.ThirdScreen.route)
                                                 //val user = auth.currentUser
                                             } else {
                                                 // If sign in fails, display a message to the user.

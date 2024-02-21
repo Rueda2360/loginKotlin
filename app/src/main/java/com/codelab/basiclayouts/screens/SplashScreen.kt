@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,12 +22,18 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController){
-    LaunchedEffect(key1 = true){
-        delay(1000)
-        navController.popBackStack()
-        navController.navigate(AppScreens.ThirdScreen.route)
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.primary
+    ) {
+        LaunchedEffect(key1 = true){
+            delay(1000)
+            navController.popBackStack()
+            navController.navigate(AppScreens.ThirdScreen.route)
+        }
+        Splash()
     }
-    Splash()
+
 }
 @Composable
 fun Splash(){
