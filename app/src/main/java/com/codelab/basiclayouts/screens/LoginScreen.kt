@@ -210,7 +210,8 @@ fun LoginScreen(navController: NavController) {
                                     // [END sign_in_with_email]
 
 
-                                }
+                                },
+
                             )
 
                             ClickableText(

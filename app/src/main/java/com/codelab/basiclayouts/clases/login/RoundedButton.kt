@@ -29,7 +29,7 @@ fun RoundedButton(
         ) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.displayMedium.copy(
+                style = MaterialTheme.typography.bodyMedium.copy(
                     color = Color.White
                 )
             )

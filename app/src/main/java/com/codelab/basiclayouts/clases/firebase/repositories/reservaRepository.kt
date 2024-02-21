@@ -16,6 +16,12 @@ class ReservaRepository(){
         fun addNewReserva(reserva: Reserva){
             val filestore = FirebaseFirestore.getInstance()
             filestore.collection("Reservas").document(reserva.id).set(reserva)
+                .addOnSuccessListener {
+
+                }
+                .addOnFailureListener{
+
+                }
         }
 
 
