@@ -185,30 +185,50 @@ fun RegisterScreen(navController: NavController) {
                                 text = "Registrar",
                                 displayProgressBar = false,
                                 onClick = {
-                                    //REGISTRAR EN FIREBASE
-                                    auth.createUserWithEmailAndPassword(emailValue.value, passwordValue.value)
-                                        .addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-                                                // Sign in success, update UI with the signed-in user's information
-                                                Log.d("Cuenta creada", "createUserWithEmail:success")
-                                                Toast.makeText(
-                                                    context,
-                                                    "Correo creado correctamente",
-                                                    Toast.LENGTH_SHORT,
-                                                ).show()
-                                                navController.navigate(AppScreens.ThirdScreen.route)
-                                                //val user = auth.currentUser
-                                            } else {
-                                                // If sign in fails, display a message to the user.
-                                                Log.w("Error al crear la cuenta", "createUserWithEmail:failure", task.exception)
-                                                Toast.makeText(
-                                                    context,
-                                                    "Error al crear la cuenta",
-                                                    Toast.LENGTH_SHORT,
-                                                ).show()
+                                    if(emailValue.value.isEmpty() || passwordValue.value.isEmpty()){
+                                        Toast.makeText(
+                                            context,
+                                            "El email o la contraseña son erróneos",
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                    } else {
 
+
+                                        //REGISTRAR EN FIREBASE
+                                        auth.createUserWithEmailAndPassword(
+                                            emailValue.value,
+                                            passwordValue.value
+                                        )
+                                            .addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d(
+                                                        "Cuenta creada",
+                                                        "createUserWithEmail:success"
+                                                    )
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Correo creado correctamente",
+                                                        Toast.LENGTH_SHORT,
+                                                    ).show()
+                                                    navController.navigate(AppScreens.ThirdScreen.route)
+                                                    //val user = auth.currentUser
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w(
+                                                        "Error al crear la cuenta",
+                                                        "createUserWithEmail:failure",
+                                                        task.exception
+                                                    )
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Error al crear la cuenta",
+                                                        Toast.LENGTH_SHORT,
+                                                    ).show()
+
+                                                }
                                             }
-                                        }
+                                    }
                                 }
                             )
 

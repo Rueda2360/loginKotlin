@@ -191,25 +191,39 @@ fun LoginScreen(navController: NavController) {
                                 text = "Login",
                                 displayProgressBar = false,
                                 onClick = {
-                                    auth.signInWithEmailAndPassword(emailValue.value, passwordValue.value)
-                                        .addOnCompleteListener{ task ->
-                                            if (task.isSuccessful) {
-                                                // Sign in success, update UI with the signed-in user's information
-                                                Log.d("Login hecho","signInWithEmail:success")
-                                                navController.navigate(AppScreens.FirstScreen.route)
-                                            } else {
-                                                // If sign in fails, display a message to the user.
-                                                Log.w("Login fallado", "signInWithEmail:failure", task.exception)
-                                                Toast.makeText(
-                                                    context,
-                                                    "Correo o contraseña erróneos",
-                                                    Toast.LENGTH_SHORT,
-                                                ).show()
+                                    if(emailValue.value.isEmpty() || passwordValue.value.isEmpty()){
+                                        Toast.makeText(
+                                            context,
+                                            "El email o la contraseña son erróneos",
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                    } else {
+                                        auth.signInWithEmailAndPassword(
+                                            emailValue.value,
+                                            passwordValue.value
+                                        )
+                                            .addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d("Login hecho", "signInWithEmail:success")
+                                                    navController.navigate(AppScreens.FirstScreen.route)
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w(
+                                                        "Login fallado",
+                                                        "signInWithEmail:failure",
+                                                        task.exception
+                                                    )
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Correo o contraseña erróneos",
+                                                        Toast.LENGTH_SHORT,
+                                                    ).show()
+                                                }
                                             }
-                                        }
-                                    // [END sign_in_with_email]
+                                        // [END sign_in_with_email]
 
-
+                                    }
                                 },
 
                             )

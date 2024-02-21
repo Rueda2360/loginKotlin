@@ -27,9 +27,9 @@ fun SplashScreen(navController: NavController){
         color = MaterialTheme.colorScheme.primary
     ) {
         LaunchedEffect(key1 = true){
-            delay(1000)
+            delay(5000)
             navController.popBackStack()
-            navController.navigate(AppScreens.ThirdScreen.route)
+            navController.navigate(AppScreens.FourthScreen.route)
         }
         Splash()
     }

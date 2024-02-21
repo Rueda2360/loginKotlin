@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ fun ReservaDetailScreen(
     var fechaInicio by remember { mutableStateOf("") }
     var fechaFin by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }
+    val context= LocalContext.current
 
     Box(
         modifier = Modifier
@@ -118,25 +120,39 @@ fun ReservaDetailScreen(
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter),
                 onClick = {
-                    reservaDetailViewModel.updateState(
-                        reservaDetailState.copy(
-                            nombre = nombre,
-                            apellidos = apellidos,
-                            fechainicio = fechaInicio,
-                            fechafin = fechaFin,
-                            lugar = lugar,
-                            descripcion = descripcion,
+                    if(nombre.isEmpty() || apellidos.isEmpty() ||fechaInicio.isEmpty() ||fechaFin.isEmpty()||lugar.isEmpty()||descripcion.isEmpty()){
+                        Toast.makeText(
+                            context,
+                            "Alguno de los valores no es válido",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    } else {
+                        reservaDetailViewModel.updateState(
+                            reservaDetailState.copy(
+                                nombre = nombre,
+                                apellidos = apellidos,
+                                fechainicio = fechaInicio,
+                                fechafin = fechaFin,
+                                lugar = lugar,
+                                descripcion = descripcion,
+                            )
                         )
-                    )
-                    reservaDetailViewModel.addNewReserva(nombre,apellidos,fechaInicio,fechaFin,lugar,descripcion)
-
+                        reservaDetailViewModel.addNewReserva(
+                            nombre,
+                            apellidos,
+                            fechaInicio,
+                            fechaFin,
+                            lugar,
+                            descripcion
+                        )
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(
                     MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(
-                    text = "Add New Reserva",
+                    text = "Añadir Nueva Reserva",
                     color = Color.White
                 )
             }
