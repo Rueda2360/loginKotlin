@@ -32,7 +32,7 @@ fun SootheBottomNavigation(modifier: Modifier = Modifier, navController:NavContr
                 Text(stringResource(R.string.bottom_navigation_home))
             },
             selected = true,
-            onClick = {}
+            onClick = {navController.navigate(AppScreens.FifthScreen.route)}
         )
         NavigationBarItem(
             icon = {
